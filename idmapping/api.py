@@ -1,16 +1,22 @@
 from tastypie.resources import ModelResource
 from tastypie import fields
-from idmapping.models import Poll,Choice
+from idmapping.models import ExternalDB, ExternalID, KBaseID
 
-class ChoiceResource(ModelResource):
-    poll = fields.ForeignKey('idmapping.api.PollResource','poll', )
+class ExternalDBResource(ModelResource):
     class Meta:
-        queryset = Choice.objects.all()
-        resource_name = 'choice'
+        queryset = ExternalDB.objects.all()
+        resource_name = 'externalDB'
 
-class PollResource(ModelResource):
-    choice = fields.ToManyField(ChoiceResource,'choice')
+# how to get kbase ids to appear here?
+class ExternalIDResource(ModelResource):
+    externaldb = fields.ForeignKey(ExternalDBResource, 'externaldb')
     class Meta:
-        queryset = Poll.objects.all()
-        resource_name = 'poll'
+        queryset = ExternalID.objects.all()
+        resource_name = 'externalID'
+
+class KBaseIDResource(ModelResource):
+    externalids = fields.ToManyField(ExternalIDResource,'externalids', full=True)
+    class Meta:
+        queryset = KBaseID.objects.all()
+        resource_name = 'kbaseID'
 

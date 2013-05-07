@@ -3,10 +3,11 @@ from django.conf.urls import patterns, include, url
 # from tastypie docs
 from django.conf.urls.defaults import *
 from tastypie.api import Api
-from idmapping.api import PollResource,ChoiceResource
-v1_api = Api(api_name='v1')
-v1_api.register(PollResource())
-v1_api.register(ChoiceResource())
+from idmapping.api import ExternalDBResource, ExternalIDResource, KBaseIDResource
+idmapping_api = Api(api_name='idmapping')
+idmapping_api.register(ExternalDBResource())
+idmapping_api.register(ExternalIDResource())
+idmapping_api.register(KBaseIDResource())
 
 
 # Uncomment the next two lines to enable the admin:
@@ -25,5 +26,5 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
 
     # from tastypie docs
-    (r'^api/', include(v1_api.urls)),
+    (r'^api/', include(idmapping_api.urls)),
 )

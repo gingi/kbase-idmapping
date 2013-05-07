@@ -21,15 +21,21 @@ class Choice(models.Model):
         return self.choice_text
 
 class ExternalDB(models.Model):
+    def __unicode__(self):
+        return self.name
     name        = models.CharField(max_length=50)
     description = models.CharField(max_length=200)
     url         = models.CharField(max_length=255)
 
 class ExternalID(models.Model):
+    def __unicode__(self):
+        return self.identifier
     identifier  = models.CharField(max_length=50)
     externaldb  = models.ForeignKey(ExternalDB)
      
 class KBaseID(models.Model):
+    def __unicode__(self):
+        return self.identifier
     identifier  = models.CharField(max_length=50)
     externalids = models.ManyToManyField(ExternalID)
 
