@@ -100,6 +100,8 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # Try to add OAuth support to Django (using sychan's middleware)
+    'oauth.OAuth2Middleware',
 )
 
 ROOT_URLCONF = 'jangles.urls'
@@ -124,8 +126,9 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     'django.contrib.admindocs',
-    'idmapping',
     'tastypie',
+    'south',
+    'idmapping',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -156,3 +159,11 @@ LOGGING = {
         },
     }
 }
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.RemoteUserBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+AUTHSVC = 'https://nexus.api.globusonline.org/'
+

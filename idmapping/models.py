@@ -23,20 +23,29 @@ class Choice(models.Model):
 class ExternalDB(models.Model):
     def __unicode__(self):
         return self.name
-    name        = models.CharField(max_length=50)
+    name        = models.CharField(max_length=50,unique=True)
     description = models.CharField(max_length=200)
     url         = models.CharField(max_length=255)
+
+class KBaseIDTypes(models.Model):
+    def __unicode__(self):
+        return self.name
+    name        = models.CharField(max_length=50,unique=True)
+    description = models.CharField(max_length=200)
 
 class ExternalID(models.Model):
     def __unicode__(self):
         return self.identifier
-    identifier  = models.CharField(max_length=50)
+    def _kbaseids(self):
+        return self.kbaseid_set.all()
+    identifier  = models.CharField(max_length=50,unique=True)
     externaldb  = models.ForeignKey(ExternalDB)
+    kbaseids = property(_kbaseids)
      
 class KBaseID(models.Model):
     def __unicode__(self):
         return self.identifier
-    identifier  = models.CharField(max_length=50)
+    identifier  = models.CharField(max_length=50,unique=True)
     externalids = models.ManyToManyField(ExternalID)
 
      
